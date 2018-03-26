@@ -2,41 +2,18 @@
 
 Portrait is a web service which converts a website into a image. The actual hard work is handled by Google's {Puppeteer}[https://github.com/GoogleChrome/puppeteer].  Portrait is primarily designed to be used as a service, but does have a minimal admin interface.
 
-== Dependencies
-You'll need to be able to run Puppeteer via Node.js. You'll also need to be able to run a Rails stack. Portrait is built on Ruby 2.3.3 and Rails 5.2
+== Coding exercise
 
-== Installation
+This is the coding exercise for Darrell Johnson.  I chose to implement encrypted passwords using BCrypt, password resets, user groups, and user roles.
 
-The provided setup script should take care of all the necessities: installing dependencies, setting up a database, and creating a temporary admin user.
+"Why did you choose to work on certain features?"
 
-  $ ./bin/setup
+I chose to implement these features because they are foundational features that seemed like they should be addressed first.  Plaintext passwords are not good to have from a security standpoint, so that was a good place to start.  Admittedly, I've used Devise in most other projects i've worked on, so doing something different with BCrypt was a learning exercise for me. The ability to reset passwords is another feature built in with Devise, so this was another learning exercise.  I've had previous experience with the letter_opener gem, so that helped with local testing. Once those were done, while I was testing, it seemed weird that a non-user had the ability to manage users, so that led to working on adding roles. I leaned on previous experience to go with the roles-based approach as opposed to having an admin flag.  Roles would allow for extensibility of adding more user types besides just an Admin, such as a Group Admin or a read-only user if the app required it. And lastly, groups allow for customers to have multiple users and customize the user experience for that group of customers.
 
-Once that completes successfully, spin up a rails server
+"Did you run into any roadblocks along the way?"
 
-  $ rails server
+I got stuck at the beginning on the http basic authentication.  I haven't worked with it before, and spent a good deal of time trying to figure out how the session would re-establish itself after removing the cookie.  I finally emailed Jordan and did a bit more research to learn about how basic auth works.  Aside from that, the other roadblock was figuring out why the 'Destroy' link wasn't working.  I didn't get to the bottom of it, but a workaround I found was to use button_to instead of link_to.  I'm sure with a bit more digging I would figure it out.
 
-And visit http://localhost:3000
+"How accurate was your estimation of time to implement?"
 
-== How it works
-
-Send a POST request like below. Use basic http authorization and provide a parameter named +site[url]+. You can test it with curl:
-
-  curl -X POST -d "site[url]=https://google.com" -H "Accept: application/json" http://admin:admin@localhost:3000/sites
-
-On a valid url, you'll get a json response like this:
-
-  {
-    "site": {
-      "id": 1,
-      "status": "succeeded",
-      "image": {
-        "url": ".../1.png"
-      }
-    }
-  }
-
-== Author
-
-* portrait was created by Jordan McKible http://jordan.mckible.com
-
-* Available on GitHub http://github.com/techvalidate/portrait
+The basic auth roadblock threw off my initial estimate.  I initially set out to do a couple evenings' worth of coding (approx 12 hrs over 3 evenings).  In the end it was closer to 17 hrs of work.  As I coded I noticed things along the way that I decided to do, which I didn't initially plan for, so those took some time.  Overall, when I get going with coding, it's fun to get things working, so I try to do as much as possible.
